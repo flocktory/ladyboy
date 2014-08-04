@@ -26,8 +26,10 @@ module Ladyboy
     def major_name_and_sex_for_full_name(full_name)
       full_name.to_s.scan(/[[:word:]]+/).map do |token|
         name = normalize_name(token)
-        sex = Ladyboy.sexes[name]
-        [name, *sex] if sex
+        if name
+          sex = Ladyboy.sexes[name] || [nil, Float::INFINITY]
+          [name, *sex]
+        end
       end.compact.sort_by(&:last).first
     end
   end
