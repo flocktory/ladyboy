@@ -18,7 +18,7 @@ module Ladyboy
       major = major_name_and_sex_for_full_name(@full_name)
       return unless major
 
-      @first_name = major[0]
+      @first_name = Unicode.capitalize(major[0])
       @gender = SEX[major[1]]
     end
 
