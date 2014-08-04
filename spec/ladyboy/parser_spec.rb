@@ -11,6 +11,10 @@ describe Ladyboy::Parser do
     example.first_name.must_equal 'Ольга'
     example.gender.must_equal     :female
 
+    example = Ladyboy::Parser.new 'zhenya'
+    example.first_name.must_equal 'Женя'
+    example.gender.must_equal     nil
+
     example = Ladyboy::Parser.new 'Рамзанкадыров'
     example.first_name.must_equal nil
     example.gender.must_equal     nil
