@@ -1,6 +1,7 @@
 module Ladyboy
   class Parser
     attr_reader :first_name, :gender, :full_name
+    alias_method :sex, :gender
 
     def initialize(full_name)
       @full_name = full_name

@@ -5,6 +5,7 @@ describe Ladyboy::Parser do
     example = Ladyboy::Parser.new 'Петр'
     example.first_name.must_equal 'Петр'
     example.gender.must_equal     :male
+    example.sex.must_equal        :male
 
     example = Ladyboy::Parser.new 'Оля'
     example.first_name.must_equal 'Ольга'
