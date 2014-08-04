@@ -14,10 +14,10 @@ module Ladyboy
     File.expand_path("../../", __FILE__)
   end
 
+  # https://github.com/flocktory/Rinatolytics/blob/master/social/names_substitutes.csv
   def names
     @names ||= begin
       n = {}
-      # https://github.com/flocktory/Rinatolytics/blob/master/social/names_substitutes.csv
       fn = File.join(root, "data", "name2name.csv")
       File.read(fn).each_line do |line|
         nick, name, type = line.chomp.split(",")
@@ -27,15 +27,15 @@ module Ladyboy
     end
   end
 
+  # https://github.com/flocktory/Rinatolytics/blob/master/social/firstnames.csv
   def sexes
     @sexes ||= begin
       s = {}
-      # https://github.com/flocktory/Rinatolytics/blob/master/social/firstnames.csv
       fn = File.join(root, "data", "name2sex.csv")
       File.read(fn).each_line.with_index do |line, priority|
         name, sex = line.chomp.split(",")
         sex = sex.to_i
-        s[name] = [sex, priority] if SEX[sex]
+        s[name] = [sex, priority] if SEX.has_key?(sex)
       end
       s
     end
