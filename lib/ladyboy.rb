@@ -37,38 +37,6 @@ module Ladyboy
       s
     end
   end
-
-  def sex_for_name(name)
-    name = normalize_name(name)
-    sex_for_normalized_name(name)
-  end
-
-  def sex_for_normalized_name(name)
-    (s = sexes[name]) and SEX[s[0]]
-  end
-
-  def normalize_name(name)
-    name = Unicode.downcase(name.to_s).gsub(/\d+/, '') # .gsub("ё", "е")
-    names[name] or sexes[name] && name
-  end
-
-  def get_first_name(full_name)
-    major = major_name_and_sex_for_full_name(full_name)
-    major.first if major
-  end
-
-  def sex_for_full_name(full_name)
-    major = major_name_and_sex_for_full_name(full_name)
-    SEX[major[1]] if major
-  end
-
-  private
-
-  def major_name_and_sex_for_full_name(full_name)
-    full_name.to_s.scan(/[[:word:]]+/).map do |token|
-      name = normalize_name(token)
-      sex = sexes[name]
-      [name, *sex] if sex
-    end.compact.sort_by(&:last).first
-  end
 end
+
+require File.join(Ladyboy.root, 'lib', 'ladyboy', 'parser')
