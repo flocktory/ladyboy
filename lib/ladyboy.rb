@@ -40,6 +40,19 @@ module Ladyboy
       s
     end
   end
+
+  def sexes_es
+    @sexes_es ||= begin
+      s = {}
+      fn = File.join(root, "data", "name2sex_es.csv")
+      File.read(fn).each_line.with_index do |line, priority|
+        name, sex = line.chomp.split(",")
+        sex = sex.to_i
+        s[name] = [sex, priority] if SEX.has_key?(sex)
+      end
+      s
+    end
+  end
 end
 
 require File.join(Ladyboy.root, 'lib', 'ladyboy', 'parser')

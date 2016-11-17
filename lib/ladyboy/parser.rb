@@ -12,7 +12,7 @@ module Ladyboy
 
     def normalize_name(name)
       name = Unicode.downcase(name.to_s).gsub(/\d+/, '') # .gsub("ё", "е")
-      Ladyboy.names[name] or Ladyboy.sexes[name] && name
+      Ladyboy.names[name] or (Ladyboy.sexes[name] && name) or (Ladyboy.sexes_es[name] && name)
     end
 
     def parse!
@@ -27,7 +27,7 @@ module Ladyboy
       full_name.to_s.scan(/[[:word:]]+/).map do |token|
         name = normalize_name(token)
         if name
-          sex = Ladyboy.sexes[name] || [nil, Float::INFINITY]
+          sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || [nil, Float::INFINITY]
           [name, *sex]
         end
       end.compact.sort_by(&:last).first

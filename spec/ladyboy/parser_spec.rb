@@ -55,6 +55,10 @@ describe Ladyboy::Parser do
     example.first_name.must_equal nil
     example.gender.must_equal     nil
 
+    example = Ladyboy::Parser.new 'Jesus'
+    example.first_name.must_equal 'Jesus'
+    example.gender.must_equal     :male
+
     example = Ladyboy::Parser.new nil
     example.first_name.must_equal nil
     example.gender.must_equal     nil
