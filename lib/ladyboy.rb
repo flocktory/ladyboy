@@ -44,11 +44,11 @@ module Ladyboy
   def sexes_es
     @sexes_es ||= begin
       s = {}
-      fn = File.join(root, "data", "name2sex_es.csv")
+      fn = File.join(root, "data", "name2sex_es2.csv")
       File.read(fn).each_line.with_index do |line, priority|
         name, sex = line.chomp.split(",")
         sex = sex.to_i
-        s[name] = [sex, priority] if SEX.has_key?(sex)
+        s[name] = [sex, priority] if SEX.has_key?(sex) && !s[name]
       end
       s
     end

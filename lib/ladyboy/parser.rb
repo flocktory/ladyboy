@@ -19,18 +19,22 @@ module Ladyboy
       major = major_name_and_sex_for_full_name(@full_name)
       return unless major
 
-      @first_name = Unicode.capitalize(major[0])
+      @first_name = major[0].split(" ").map{|m| Unicode.capitalize(m) } * " " if major[0]
       @gender = SEX[major[1]]
     end
 
     def major_name_and_sex_for_full_name(full_name)
-      full_name.to_s.scan(/[[:word:]]+/).map do |token|
-        name = normalize_name(token)
-        if name
-          sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || [nil, Float::INFINITY]
-          [name, *sex]
+      tokens = full_name.to_s.scan(/[[:word:]]+/)
+      [2, 1].map do |size|
+        tokens.each_cons(size).map do |slice|
+          token = slice * " "
+          name = normalize_name(token)
+          if name
+            sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || [nil, Float::INFINITY]
+            [name, *sex, -size]
+          end
         end
-      end.compact.sort_by(&:last).first
+      end.flatten(1).compact.sort_by{ |n| [n[3], n[2]] }.first
     end
   end
 end
