@@ -1,6 +1,5 @@
 require "ladyboy/version"
 require "unicode"
-require "active_support"
 
 module Ladyboy
   extend self
