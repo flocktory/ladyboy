@@ -1,3 +1,5 @@
+require "i18n"
+I18n.available_locales = [:en]
 module Ladyboy
   class Parser
     attr_reader :first_name, :gender, :full_name
@@ -12,7 +14,13 @@ module Ladyboy
 
     def normalize_name(name)
       name = Unicode.downcase(name.to_s).gsub(/\d+/, '') # .gsub("ё", "е")
-      Ladyboy.names[name] or (Ladyboy.sexes[name] && name) or (Ladyboy.sexes_es[name] && name)
+      name_translit = I18n.transliterate(name)
+      Ladyboy.names[name] or 
+        (Ladyboy.sexes[name] && name) or 
+        (Ladyboy.sexes_es[name] && name) or
+        Ladyboy.names[name_translit] or 
+        (Ladyboy.sexes[name_translit] && name_translit) or 
+        (Ladyboy.sexes_es[name_translit] && name_translit)
     end
 
     def parse!

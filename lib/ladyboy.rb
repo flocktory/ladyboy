@@ -1,5 +1,8 @@
 require "ladyboy/version"
 require "unicode"
+require "i18n"
+
+I18n.available_locales = [:en]
 
 module Ladyboy
   extend self
