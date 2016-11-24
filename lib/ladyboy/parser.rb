@@ -31,15 +31,15 @@ module Ladyboy
     def major_name_and_sex_for_full_name(full_name)
       tokens = full_name.to_s.scan(/[[:word:]]+/)
       [2, 1].map do |size|
-        tokens.each_cons(size).map do |slice|
+        tokens.each_cons(size).map.with_index do |slice, i|
           token = slice * " "
           name = normalize_name(token)
           if name
             sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || [nil, Float::INFINITY]
-            [name, *sex, -size]
+            [name, *sex, -size, i]
           end
         end
-      end.flatten(1).compact.sort_by{ |n| [n[3], n[2]] }.first
+      end.flatten(1).compact.sort_by{ |n| [n[4], n[3]] }.first
     end
   end
 end
