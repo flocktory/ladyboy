@@ -15,7 +15,7 @@ module Ladyboy
         "ÀÁÂÃÄÅàáâãäåĀāĂăĄąÇçĆćĈĉĊċČčÐðĎďĐđÈÉÊËèéêëĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħÌÍÎÏìíîïĨĩĪīĬĭĮįİıĴĵĶķĸĹĺĻļĽľĿŀŁłÑñŃńŅņŇňŉŊŋÒÓÔÕÖØòóôõöøŌōŎŏŐőŔŕŖŗŘřŚśŜŝŞşŠšſŢţŤťŦŧÙÚÛÜùúûüŨũŪūŬŭŮůŰűŲųŴŵÝýÿŶŷŸŹźŻżŽž",
         "AAAAAAaaaaaaAaAaAaCcCcCcCcCcDdDdDdEEEEeeeeEeEeEeEeEeGgGgGgGgHhHhIIIIiiiiIiIiIiIiIiJjKkkLlLlLlLlLlNnNnNnNnnNnOOOOOOooooooOoOoOoRrRrRrSsSsSsSssTtTtTtUUUUuuuuUuUuUuUuUuUuWwYyyYyYZzZzZz"
       ) # .gsub("ё", "е")
-      Ladyboy.names[name] or 
+      (Ladyboy.sexes[Ladyboy.names[name]] && Ladyboy.names[name]) or 
         (Ladyboy.sexes[name] && name) or 
         (Ladyboy.sexes_es[name] && name)
     end
@@ -35,7 +35,7 @@ module Ladyboy
           token = slice * " "
           name = normalize_name(token)
           if name
-            sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || [nil, Float::INFINITY]
+            sex = Ladyboy.sexes[name] || Ladyboy.sexes_es[name] || Ladyboy.sexes_es[token] || [nil, Float::INFINITY]
             [name, *sex, -size, i]
           end
         end
